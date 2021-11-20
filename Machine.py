@@ -25,6 +25,18 @@ class Machine:
         del self.δ[arrow]
 
 
+
+    def DFA(self, s_input):
+        state = self.q0
+        for s in s_input:
+            state = self.δ[(state, s)]
+            
+        if state in self.qf:
+            return print("Accepted")
+        
+        return print("Rejected")
+
+
 def main():
     d = Machine()
     d.Q = ["qo", "q1", "q2"]
@@ -32,22 +44,14 @@ def main():
     d.q0 = "q0"
     d.qf = ["q2"]
 
+    d.addArrow("q0", "a", "q0")
     d.addArrow("q0", "b", "q1")
     d.addArrow("q1", "a", "q1")
     d.addArrow("q1", "b", "q2")
-    d.addArrow("q2", "b", "q2")
     d.addArrow("q2", "a", "q2")
-
-    print(d.δ)
-
-    d.removeArrow("q0", "b", "q1")
-    d.removeArrow("q1", "a", "q1")
-    d.removeArrow("q1", "b", "q2")
-    d.removeArrow("q2", "b", "q2")
-    d.removeArrow("q2", "a", "q2")
-
-    print(d.δ)
-
+    d.addArrow("q2", "b", "q2")
+    
+    d.DFA("bbaab")
 
 if __name__ == "__main__":
     main()
